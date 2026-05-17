@@ -1,0 +1,8 @@
+ @if(searchResult().length != 0) {
+
+        <div class="items">
+        @for (item of searchResult(); track $index) {
+                <span (click)="selectItem(item)"> {{item.title}} </span>
+            }
+        </div>
+    }

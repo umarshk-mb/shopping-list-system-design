@@ -1,32 +1,9 @@
 <div class="container">
     <input type="text" placeholder="Search..." class="search-input" [formControl]="searchItem">
 
-
-    @if(searchResults().length != 0) {
-
-        <div class="items">
-        @for (item of searchResults(); track $index) {
-                <span (click)="selectItem(item)"> {{item.title}} </span>
-            }
-        </div>
-    }
+    <app-shopping-list [searchResult]="searchResults()"></app-shopping-list>
 </div>
 
 
-@if(selectedItems.length !== 0) {
-    <div class="cart">
-        @for (item of selectedItems; track $index) {
-        <div class="cart-items">
-            <span class="name" [ngClass]="{'disabled': item.disabled}">{{item.name}}</span>
-            
-            
-            <span class="strike" (click)="strike(item)">Add</span>
-            <span class="delete" (click)="remove(item)">Remove</span>
-
-            <span class="count">{{item.count}}</span>
-
-        </div>
-    }
-    </div>
-}
+<app-shopping-cart></app-shopping-cart>
     

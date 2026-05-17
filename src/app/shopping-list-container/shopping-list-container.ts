@@ -4,17 +4,18 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { count, debounceTime, distinctUntilChanged, filter, switchMap } from 'rxjs';
 import { ShoppingListService } from '../shopping-list-service';
 import { NgClass } from '@angular/common';
+import { ShoppingList } from '../shopping-list/shopping-list';
+import { ShoppingCart } from '../shopping-cart/shopping-cart';
 
 @Component({
   selector: 'app-shopping-list-container',
-  imports: [ReactiveFormsModule, NgClass],
+  imports: [ReactiveFormsModule, ShoppingList, ShoppingCart],
   templateUrl: './shopping-list-container.html',
   styleUrl: './shopping-list-container.css',
+  standalone: true
 })
 export class ShoppingListContainer {
   searchItem = new FormControl('');
-
-  selectedItems: {itemId: number, name: string, count: number, disabled: boolean}[] = [];
 
   private destroyRef = inject(DestroyRef)
   constructor(private shoppilistService: ShoppingListService) {}
@@ -29,25 +30,4 @@ export class ShoppingListContainer {
     ),
     {initialValue: []}
   )
-
-  selectItem(item: any) {
-    const existingItem = this.selectedItems.find((items) => items.itemId === item.id)
-    if(existingItem) {
-      existingItem.count += 1
-    } else {
-      this.selectedItems.push({itemId: item.id, name: item.title, count: 0, disabled: false})
-    }
-  }
-
-
-  strike(item: any) {
-    const existingItem = this.selectedItems.find((items) => items.itemId === item.itemId)
-    if(existingItem) {
-      existingItem.disabled = !existingItem.disabled;
-    }
-  }
- 
-  remove(item: any) {
-    this.selectedItems = this.selectedItems.filter((items) => items.itemId !== item.itemId)
-  }
 }

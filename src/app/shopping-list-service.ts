@@ -1,12 +1,19 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Injectable, signal } from '@angular/core';
+import { count, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ShoppingListService {
-  selectedItems: {itemId: number, name: string, count: number, disabled: boolean}[] = [];
+  selectedItems = signal<
+  {
+    itemId: number,
+    name: string,
+    count: number,
+    disabled: boolean
+  }[]
+>([]);
 
   constructor(private http: HttpClient) {}
 
@@ -15,11 +22,23 @@ export class ShoppingListService {
   }
   
     selectedItem(item: any) {
-    const existingItem = this.selectedItems.find((items) => items.itemId === item.id)
-    if(existingItem) {
-      existingItem.count += 1
-    } else {
-      this.selectedItems.push({itemId: item.id, name: item.title, count: 0, disabled: false})
-    }
+    this.selectedItems.update(items => {
+      const existingItem = items.find(i => i.itemId === item.id)
+
+      if(existingItem) {
+       existingItem.count += 1;
+      return [...items];
+      }
+
+      return [
+        ...items,
+        {
+          itemId: item.id,
+          name: item.title,
+          count: 1,
+          disabled: false
+        }
+      ]
+    })
   }
 }

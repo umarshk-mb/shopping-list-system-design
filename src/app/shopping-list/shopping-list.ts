@@ -14,6 +14,6 @@ export class ShoppingList {
   constructor(private shoppingService: ShoppingListService) {}
 
   selectItem(item: any) {
-    this.shoppingService.selectedItem(item);
+    this.shoppingService.selectedItem((item));
   }
 }

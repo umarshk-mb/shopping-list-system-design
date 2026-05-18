@@ -1,9 +1,8 @@
-import { Component, DestroyRef, inject, OnDestroy } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { count, debounceTime, distinctUntilChanged, filter, switchMap } from 'rxjs';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { debounceTime, distinctUntilChanged, filter, switchMap } from 'rxjs';
 import { ShoppingListService } from '../shopping-list-service';
-import { NgClass } from '@angular/common';
 import { ShoppingList } from '../shopping-list/shopping-list';
 import { ShoppingCart } from '../shopping-cart/shopping-cart';
 
